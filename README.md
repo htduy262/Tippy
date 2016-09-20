@@ -21,7 +21,7 @@ The following **optional** features are implemented:
 
 The following **additional** features are implemented:
 
-- [x] Using auto-layout to fit to all iphone screen
+- [x] Using auto-layout to fit to all iphone screens
 
 ## Video Walkthrough 
 
