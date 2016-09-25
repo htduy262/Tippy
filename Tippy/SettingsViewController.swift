@@ -19,6 +19,11 @@ class SettingsViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        //UIFont(name: "HelveticaNeue-Bold", size: 11.0)
+//        let attributes = [
+//            NSFontAttributeName : UIFont(name: "Arial", size: 11.0)
+//        ] as [String : Any]
+//        tipControl.setTitleTextAttributes(attributes, for: .normal)
     }
 
     override func viewWillAppear(_ animated: Bool) {

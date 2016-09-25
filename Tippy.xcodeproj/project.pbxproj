@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		604A6A13CEF33AB9DBDE65D5 /* Pods_Tippy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35AEEECEADB8D2C22EDE7562 /* Pods_Tippy.framework */; };
 		6D13A9FA1D91906100EC1679 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D13A9F91D91906100EC1679 /* AppDelegate.swift */; };
 		6D13A9FC1D91906100EC1679 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D13A9FB1D91906100EC1679 /* ViewController.swift */; };
 		6D13A9FF1D91906100EC1679 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6D13A9FD1D91906100EC1679 /* Main.storyboard */; };
@@ -27,6 +28,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		22FC23DF68E36D8C996059EB /* Pods-Tippy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tippy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tippy/Pods-Tippy.debug.xcconfig"; sourceTree = "<group>"; };
+		35AEEECEADB8D2C22EDE7562 /* Pods_Tippy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tippy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D13A9F61D91906100EC1679 /* Tippy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tippy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6D13A9F91D91906100EC1679 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6D13A9FB1D91906100EC1679 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -46,6 +49,7 @@
 		6DA9695D1D92E92D00E62FBB /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		6DA9695F1D92E93100E62FBB /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
 		6DA969631D92F2C600E62FBB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		EA1E36F8D45180BE7203FA0A /* Pods-Tippy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tippy.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tippy/Pods-Tippy.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +68,7 @@
 				6DA969501D92E8EE00E62FBB /* MessageUI.framework in Frameworks */,
 				6DA9694E1D92E8E500E62FBB /* SystemConfiguration.framework in Frameworks */,
 				6DA9694C1D92E89600E62FBB /* GoogleMobileAds.framework in Frameworks */,
+				604A6A13CEF33AB9DBDE65D5 /* Pods_Tippy.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -76,6 +81,7 @@
 				6D13A9F81D91906100EC1679 /* Tippy */,
 				6D13A9F71D91906100EC1679 /* Products */,
 				6DA9694A1D92E89500E62FBB /* Frameworks */,
+				FFE71AFF7FE07EA670BC0C6F /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -115,8 +121,18 @@
 				6DA9694F1D92E8EE00E62FBB /* MessageUI.framework */,
 				6DA9694D1D92E8E500E62FBB /* SystemConfiguration.framework */,
 				6DA9694B1D92E89600E62FBB /* GoogleMobileAds.framework */,
+				35AEEECEADB8D2C22EDE7562 /* Pods_Tippy.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FFE71AFF7FE07EA670BC0C6F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				22FC23DF68E36D8C996059EB /* Pods-Tippy.debug.xcconfig */,
+				EA1E36F8D45180BE7203FA0A /* Pods-Tippy.release.xcconfig */,
+			);
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -126,9 +142,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6D13AA081D91906100EC1679 /* Build configuration list for PBXNativeTarget "Tippy" */;
 			buildPhases = (
+				142006E5048EA044AAAF6224 /* [CP] Check Pods Manifest.lock */,
 				6D13A9F21D91906100EC1679 /* Sources */,
 				6D13A9F31D91906100EC1679 /* Frameworks */,
 				6D13A9F41D91906100EC1679 /* Resources */,
+				67459D4F1CC6E57FAC75469A /* [CP] Embed Pods Frameworks */,
+				E9D1D4A79CB856E29D0C6B13 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -187,6 +206,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		142006E5048EA044AAAF6224 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		67459D4F1CC6E57FAC75469A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Tippy/Pods-Tippy-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E9D1D4A79CB856E29D0C6B13 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Tippy/Pods-Tippy-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		6D13A9F21D91906100EC1679 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -238,6 +305,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -287,6 +355,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_SUSPICIOUS_MOVES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -313,7 +382,9 @@
 		};
 		6D13AA091D91906100EC1679 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 22FC23DF68E36D8C996059EB /* Pods-Tippy.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = NU9PWDD789;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -331,7 +402,9 @@
 		};
 		6D13AA0A1D91906100EC1679 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EA1E36F8D45180BE7203FA0A /* Pods-Tippy.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = NU9PWDD789;
 				FRAMEWORK_SEARCH_PATHS = (

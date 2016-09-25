@@ -8,8 +8,9 @@
 
 import UIKit
 import GoogleMobileAds
+import SCLAlertView
 
-class ViewController: UIViewController, UITextFieldDelegate {
+class ViewController: UIViewController {
     
     @IBOutlet weak var adBanner: GADBannerView!
     
@@ -20,29 +21,37 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var tipLabel: UILabel!
     @IBOutlet weak var numberOfMemberLabel: UILabel!
     @IBOutlet weak var totalLabel: UILabel!
-    @IBOutlet weak var number2Label: UILabel!
-    @IBOutlet weak var number3Label: UILabel!
-    @IBOutlet weak var number4Label: UILabel!
-    @IBOutlet weak var number5Label: UILabel!
-    @IBOutlet weak var number6Label: UILabel!
-    @IBOutlet weak var divedBy2Label: UILabel!
-    @IBOutlet weak var divedBy3Label: UILabel!
-    @IBOutlet weak var divedBy4Label: UILabel!
-    @IBOutlet weak var divedBy5Label: UILabel!
-    @IBOutlet weak var divedBy6Label: UILabel!
+    @IBOutlet weak var finalAmount: UILabel!
     @IBOutlet weak var settingsBarButtonItem: UIBarButtonItem!
+    @IBOutlet weak var viewFinal: UIView!
+    @IBOutlet weak var viewBottom: UIView!
     
+    @IBOutlet weak var viewFinalTopConstrain: NSLayoutConstraint!
+    
+    var timerPacman = Timer()
     let defaults = UserDefaults.standard
     let tipPercentageArray = [0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3]
     var currentCurrencyLable = ""
     var totalAmount:Double = 0
+    var numberOfMember:Int = 2
+    var oldTipPercentage:Int = 0
+    var pacmanFlag = 1
+    var savedDistance:CGFloat = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        //timerPacman = Timer.scheduledTimer(timeInterval: 0.4, target: self, selector: #selector(pacmanChange), userInfo: nil, repeats: true)
         
-        // TextField delegate
-        billField.delegate = self
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(appMovedToBackground), name: NSNotification.Name.UIApplicationWillResignActive, object: nil)
+        
+        // TextField
+        billField.layer.cornerRadius = 0
+        billField.layer.borderWidth = 1
+        billField.layer.borderColor = UIColor(colorLiteralRed: 227/255, green: 227/255, blue: 227/255, alpha: 1).cgColor
         
         // Color for navigation bar
         self.navigationController?.navigationBar.tintColor = UIColor(colorLiteralRed: 0, green: 145/255, blue: 146/255, alpha: 1)
@@ -53,27 +62,29 @@ class ViewController: UIViewController, UITextFieldDelegate {
         ]
         self.navigationController?.navigationBar.titleTextAttributes = attributes
         
-        // Focus on bill field
-        billField.becomeFirstResponder()
-        
         // Thumb image for slider
-        tipSlider.setThumbImage(UIImage(named: "thumb"), for: UIControlState.normal)
-        tipSlider.setThumbImage(UIImage(named: "thumb"), for: UIControlState.highlighted)
-        groupSlider.setThumbImage(UIImage(named: "thumb"), for: UIControlState.normal)
-        groupSlider.setThumbImage(UIImage(named: "thumb"), for: UIControlState.highlighted)
+        tipSlider.setThumbImage(UIImage(named: "pacman1"), for: UIControlState.normal)
+        tipSlider.setThumbImage(UIImage(named: "pacman1"), for: UIControlState.highlighted)
+        groupSlider.setThumbImage(UIImage(named: "group"), for: UIControlState.normal)
+        groupSlider.setThumbImage(UIImage(named: "group"), for: UIControlState.highlighted)
         
         // Load default settings
         let tipPercentage = defaults.integer(forKey: "TIP_PERCENTAGE_INDEX")
         print("TIP_PERCENTAGE_INDEX = \(tipPercentage)")
         tipSlider.value = Float(tipPercentageArray[tipPercentage]) * 100
-        tipPercentageLabel.text = "\(Int(tipSlider.value)) %"
+        oldTipPercentage = Int(tipSlider.value)
+        tipPercentageLabel.text = "Tip \(Int(tipSlider.value)) %"
         groupSlider.value = 2
-        numberOfMemberLabel.text = "2"
+        numberOfMemberLabel.text = "Split to 2 people"
         
         // Load ads
         adBanner.adUnitID = "ca-app-pub-8801439798856966/5867909131"
         adBanner.rootViewController = self
         adBanner.load(GADRequest())
+    }
+    
+    func appMovedToBackground() {
+        self.view.endEditing(true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -90,6 +101,16 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         // Always calculate bill
         calculateBill(self)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if savedDistance == 0 {
+            savedDistance = viewBottom.frame.height
+            
+            // Focus on bill field
+            billField.becomeFirstResponder()
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -123,16 +144,12 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func calculateBill(_ sender: AnyObject) {
+        
         if (billField.text != "" && Double (billField.text!) == nil) {
-            billField.layer.borderColor = UIColor(colorLiteralRed: 240/255, green: 70/255, blue: 40/255, alpha: 1).cgColor
-            billField.layer.borderWidth = 1.0;
-            billField.layer.cornerRadius = 5.0;
-            
             billField.backgroundColor = UIColor(colorLiteralRed: 1, green: 200/255, blue: 200/255, alpha: 1)
         }
         else {
-            billField.layer.borderColor = UIColor(colorLiteralRed: 204/255, green: 204/255, blue: 204/255, alpha: 1).cgColor
-            billField.backgroundColor = UIColor.white
+            billField.backgroundColor = UIColor(colorLiteralRed: 234/255, green: 234/255, blue: 234/255, alpha: 1)
         }
         
         let bill = Double (billField.text!) ?? 0
@@ -143,96 +160,65 @@ class ViewController: UIViewController, UITextFieldDelegate {
         tipLabel.text = String(format: "\(currentCurrencyLable) %.2f", locale: Locale.current, tip)
         
         totalLabel.pushTransition(duration: 0.4)
-        divedBy2Label.pushTransition(duration: 0.4)
-        divedBy3Label.pushTransition(duration: 0.4)
-        divedBy4Label.pushTransition(duration: 0.4)
-        divedBy5Label.pushTransition(duration: 0.4)
-        divedBy6Label.pushTransition(duration: 0.4)
-        
         totalLabel.text = String(format: "\(currentCurrencyLable) %.2f", locale: Locale.current, totalAmount)
         
-        let numberOfMember:Int = Int(numberOfMemberLabel.text!)!
-        
-        switch numberOfMember {
-        case 1:
-            number2Label.text = "2"
-            number3Label.text = "3"
-            number4Label.text = "4"
-            number5Label.text = "5"
-            number6Label.text = "6"
-            
-            divedBy2Label.text = String(format: "\(currentCurrencyLable) %.2f", locale: Locale.current, totalAmount / 2)
-            divedBy3Label.text = String(format: "\(currentCurrencyLable) %.2f", locale: Locale.current, totalAmount / 3)
-            divedBy4Label.text = String(format: "\(currentCurrencyLable) %.2f", locale: Locale.current, totalAmount / 4)
-            divedBy5Label.text = String(format: "\(currentCurrencyLable) %.2f", locale: Locale.current, totalAmount / 5)
-            divedBy6Label.text = String(format: "\(currentCurrencyLable) %.2f", locale: Locale.current, totalAmount / 6)
-            break;
-        case 2, 3, 4, 5, 6, 7, 8, 9, 10:
-            number2Label.text = String(Int(groupSlider.value))
-            number3Label.text = String(Int(groupSlider.value + 1))
-            number4Label.text = String(Int(groupSlider.value + 2))
-            number5Label.text = String(Int(groupSlider.value + 3))
-            number6Label.text = String(Int(groupSlider.value + 4))
-            
-            divedBy2Label.text = String(format: "\(currentCurrencyLable) %.2f", locale: Locale.current, totalAmount / Double(numberOfMember))
-            divedBy3Label.text = String(format: "\(currentCurrencyLable) %.2f", locale: Locale.current, totalAmount / Double(numberOfMember + 1))
-            divedBy4Label.text = String(format: "\(currentCurrencyLable) %.2f", locale: Locale.current, totalAmount / Double(numberOfMember + 2))
-            divedBy5Label.text = String(format: "\(currentCurrencyLable) %.2f", locale: Locale.current, totalAmount / Double(numberOfMember + 3))
-            divedBy6Label.text = String(format: "\(currentCurrencyLable) %.2f", locale: Locale.current, totalAmount / Double(numberOfMember + 4))
-            break;
-        case 11, 12, 13, 14, 15:
-            number2Label.text = "11"
-            number3Label.text = "12"
-            number4Label.text = "13"
-            number5Label.text = "14"
-            number6Label.text = "15"
-            
-            divedBy2Label.text = String(format: "\(currentCurrencyLable) %.2f", locale: Locale.current, totalAmount / 11)
-            divedBy3Label.text = String(format: "\(currentCurrencyLable) %.2f", locale: Locale.current, totalAmount / 12)
-            divedBy4Label.text = String(format: "\(currentCurrencyLable) %.2f", locale: Locale.current, totalAmount / 13)
-            divedBy5Label.text = String(format: "\(currentCurrencyLable) %.2f", locale: Locale.current, totalAmount / 14)
-            divedBy6Label.text = String(format: "\(currentCurrencyLable) %.2f", locale: Locale.current, totalAmount / 15)
-            break;
-        default:
-            print("Á \(groupSlider.value)")
-            break;
-        }
+        updateFinalAmountLabel()
+    }
+    
+    func updateFinalAmountLabel() {
+        finalAmount.pushTransition(duration: 0.4)
+        finalAmount.text = String(format: "\(currentCurrencyLable) %.2f", locale: Locale.current, totalAmount / Double(Int(groupSlider.value)))
     }
     
     @IBAction func tipPercentageChanged(_ sender: AnyObject) {
+        
         tipSlider.setValue((Float)((Int)((tipSlider.value + 2.5) / 5) * 5), animated: true)
         
-        tipPercentageLabel.text = "\(Int(tipSlider.value)) %"
+        tipPercentageLabel.text = "Tip \(Int(tipSlider.value)) %"
         
         if billField.text == "" {
             return
         }
+    }
+    
+    @IBAction func beginChangeTipPercentage(_ sender: AnyObject) {
+        timerPacman = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(pacmanChange), userInfo: nil, repeats: true)
+    }
+    @IBAction func endChangeTipPercentage(_ sender: AnyObject) {
+        timerPacman.invalidate()
         
-        Thread.cancelPreviousPerformRequests(withTarget: self, selector: #selector(calculateBill), object: nil)
-        self.perform(#selector(calculateBill), with: self, afterDelay: 0.7)
-        
+        if oldTipPercentage != Int(tipSlider.value) {
+            oldTipPercentage = Int(tipSlider.value)
+            calculateBill(self)
+        }
     }
     
     @IBAction func numberOfMemberChanged(_ sender: AnyObject) {
-        groupSlider.value = groupSlider.value
-        numberOfMemberLabel.text = "\(Int(groupSlider.value))"
+        numberOfMemberLabel.text = "Split to \(Int(groupSlider.value)) people"
         
         if billField.text == "" {
             return
         }
-        
-        Thread.cancelPreviousPerformRequests(withTarget: self, selector: #selector(calculateBill), object: nil)
-        self.perform(#selector(calculateBill), with: self, afterDelay: 0.7)
     }
+    
+    @IBAction func endChangeNumberOfMember(_ sender: AnyObject) {
+        if billField.text != "" && numberOfMember != Int(groupSlider.value) {
+            numberOfMember = Int(groupSlider.value)
+            updateFinalAmountLabel()
+        }
+    }
+    
     
     @IBAction func plusTouched(_ sender: AnyObject) {
         tipSlider.value = tipSlider.value + 1
+        
+        pacmanChange()
         
         if tipSlider.value > 30 {
             tipSlider.value = 30
         }
         
-        tipPercentageLabel.text = "\(Int(tipSlider.value)) %"
+        tipPercentageLabel.text = "Tip \(Int(tipSlider.value)) %"
         
         if billField.text != "" {
             calculateBill(self)
@@ -242,26 +228,45 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBAction func minusTouched(_ sender: AnyObject) {
         tipSlider.value = tipSlider.value - 1
         
+        pacmanChange()
+        
         if tipSlider.value < 0 {
             tipSlider.value = 0
         }
         
-        tipPercentageLabel.text = "\(Int(tipSlider.value)) %"
+        tipPercentageLabel.text = "Tip \(Int(tipSlider.value)) %"
         
         if billField.text != "" {
             calculateBill(self)
         }
     }
     
-    @IBAction func groupButtonTouched(_ sender: AnyObject) {
-        groupSlider.value = 1
-        numberOfMemberLabel.text = "1"
-        
-        if billField.text != "" {
-            calculateBill(self)
+    internal func keyboardWillShow(notification: NSNotification) {
+        if let keyboard = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            UIView.animate(withDuration: 10, animations: {
+                self.viewFinalTopConstrain.constant += -keyboard.height + self.savedDistance
+                self.view.layoutIfNeeded()
+            })
         }
     }
     
+    internal func keyboardWillHide(notification: NSNotification) {
+        if let keyboard = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
+            UIView.animate(withDuration: 10, animations: {
+                self.viewFinalTopConstrain.constant += keyboard.height - self.savedDistance
+                self.view.layoutIfNeeded()
+            })
+        }
+    }
+    
+    func pacmanChange() {
+        tipSlider.setThumbImage(UIImage(named: "pacman\(pacmanFlag)"), for: UIControlState.normal)
+        tipSlider.setThumbImage(UIImage(named: "pacman\(pacmanFlag)"), for: UIControlState.highlighted)
+        pacmanFlag += 1
+        if pacmanFlag > 8 {
+            pacmanFlag = 1
+        }
+    }
 }
 
 extension UIView {
