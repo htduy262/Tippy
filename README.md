@@ -4,13 +4,13 @@
 
 Submitted by: **Huynh Thanh Duy**
 
-Time spent: **6** hours spent in total
+Time spent: **24** hours spent in total
 
 ## User Stories
 
 The following **required** functionality is complete:
 
-* [x] User can enter a bill amount, choose a tip percentage, and see the tip and total values, bill amount dived by 2, 3, 4, 5, 6 people.
+* [x] User can enter a bill amount, choose a tip percentage, number of members, and see the tip and total values
 * [x] Settings page to change the default tip percentage, label of currency.
 
 The following **optional** features are implemented:
@@ -33,8 +33,9 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-When implement this app, I got stuck in using BarButtonItem, where to place it on and push to Settings screen. So I research on youtube I found that I should place it on Navigation bar next to the tittle.
-I think remembering the bill amount across app restarts is not necessary.
+When implement this app, I got stuck in 
+- Using BarButtonItem, where to place it on and push to Settings screen. So I research on youtube I found that I should place it on Navigation bar next to the tittle.
+- Move view up when keyboard appears
 
 ## License
 
