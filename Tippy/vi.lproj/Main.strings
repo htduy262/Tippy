@@ -1,0 +1,63 @@
+
+/* Class = "UITextField"; placeholder = "$"; ObjectID = "0hE-vn-DtD"; */
+"0hE-vn-DtD.placeholder" = "$";
+
+/* Class = "UITextField"; text = "$"; ObjectID = "0hE-vn-DtD"; */
+"0hE-vn-DtD.text" = "$";
+
+/* Class = "UITextField"; placeholder = "bill amount"; ObjectID = "2hQ-90-B6L"; */
+"2hQ-90-B6L.placeholder" = "bill amount";
+
+/* Class = "UILabel"; text = "Total"; ObjectID = "2vp-aw-6MI"; */
+"2vp-aw-6MI.text" = "Total";
+
+/* Class = "UILabel"; text = "VND 999,999.99"; ObjectID = "Hv4-TL-GSL"; */
+"Hv4-TL-GSL.text" = "VND 999,999.99";
+
+/* Class = "UILabel"; text = "$ 0.00"; ObjectID = "JSI-wQ-zRP"; */
+"JSI-wQ-zRP.text" = "$ 0.00";
+
+/* Class = "UILabel"; text = "VND 999,999.99"; ObjectID = "LvY-gc-tKS"; */
+"LvY-gc-tKS.text" = "VND 999,999.99";
+
+/* Class = "UILabel"; text = "Tip"; ObjectID = "V02-rb-Bqr"; */
+"V02-rb-Bqr.text" = "Tip";
+
+/* Class = "UILabel"; text = "Split to 6 people"; ObjectID = "WJv-Q4-pY8"; */
+"WJv-Q4-pY8.text" = "Split to 6 people";
+
+/* Class = "UILabel"; text = "Defaults"; ObjectID = "b7r-JN-e29"; */
+"b7r-JN-e29.text" = "Defaults";
+
+/* Class = "UISegmentedControl"; oyW-iT-iVl.segmentTitles[0] = "0%"; ObjectID = "oyW-iT-iVl"; */
+"oyW-iT-iVl.segmentTitles[0]" = "0%";
+
+/* Class = "UISegmentedControl"; oyW-iT-iVl.segmentTitles[1] = "5%"; ObjectID = "oyW-iT-iVl"; */
+"oyW-iT-iVl.segmentTitles[1]" = "5%";
+
+/* Class = "UISegmentedControl"; oyW-iT-iVl.segmentTitles[2] = "10%"; ObjectID = "oyW-iT-iVl"; */
+"oyW-iT-iVl.segmentTitles[2]" = "10%";
+
+/* Class = "UISegmentedControl"; oyW-iT-iVl.segmentTitles[3] = "15%"; ObjectID = "oyW-iT-iVl"; */
+"oyW-iT-iVl.segmentTitles[3]" = "15%";
+
+/* Class = "UISegmentedControl"; oyW-iT-iVl.segmentTitles[4] = "20%"; ObjectID = "oyW-iT-iVl"; */
+"oyW-iT-iVl.segmentTitles[4]" = "20%";
+
+/* Class = "UISegmentedControl"; oyW-iT-iVl.segmentTitles[5] = "25%"; ObjectID = "oyW-iT-iVl"; */
+"oyW-iT-iVl.segmentTitles[5]" = "25%";
+
+/* Class = "UISegmentedControl"; oyW-iT-iVl.segmentTitles[6] = "30%"; ObjectID = "oyW-iT-iVl"; */
+"oyW-iT-iVl.segmentTitles[6]" = "30%";
+
+/* Class = "UILabel"; text = "Tip %"; ObjectID = "pQY-5x-wVD"; */
+"pQY-5x-wVD.text" = "Tip %";
+
+/* Class = "UINavigationItem"; title = "Tip calculator"; ObjectID = "rKe-wB-hYG"; */
+"rKe-wB-hYG.title" = "Tip calculator";
+
+/* Class = "UILabel"; text = "Currency"; ObjectID = "sT3-f2-EuQ"; */
+"sT3-f2-EuQ.text" = "Currency";
+
+/* Class = "UILabel"; text = "Tip 30 %"; ObjectID = "tgu-6D-mgt"; */
+"tgu-6D-mgt.text" = "Tip 30 %";
