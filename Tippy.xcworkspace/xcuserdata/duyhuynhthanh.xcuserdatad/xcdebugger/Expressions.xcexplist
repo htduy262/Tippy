@@ -46,6 +46,9 @@
             <PersistentString
                value = "viewBottom.bounds">
             </PersistentString>
+            <PersistentString
+               value = "UIDevice.current">
+            </PersistentString>
          </PersistentStrings>
       </ContextState>
       <ContextState

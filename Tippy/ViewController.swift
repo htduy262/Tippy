@@ -8,7 +8,6 @@
 
 import UIKit
 import GoogleMobileAds
-import SCLAlertView
 
 class ViewController: UIViewController {
     
@@ -65,8 +64,16 @@ class ViewController: UIViewController {
         // Thumb image for slider
         tipSlider.setThumbImage(UIImage(named: "pacman1"), for: UIControlState.normal)
         tipSlider.setThumbImage(UIImage(named: "pacman1"), for: UIControlState.highlighted)
-        groupSlider.setThumbImage(UIImage(named: "group"), for: UIControlState.normal)
-        groupSlider.setThumbImage(UIImage(named: "group"), for: UIControlState.highlighted)
+        groupSlider.setThumbImage(UIImage(named: "group4inch"), for: UIControlState.normal)
+        groupSlider.setThumbImage(UIImage(named: "group4inch"), for: UIControlState.highlighted)
+        if self.view.frame.height < 667 {
+            groupSlider.setThumbImage(UIImage(named: "group4inch"), for: UIControlState.normal)
+            groupSlider.setThumbImage(UIImage(named: "group4inch"), for: UIControlState.highlighted)
+        }
+        else {
+            groupSlider.setThumbImage(UIImage(named: "group"), for: UIControlState.normal)
+            groupSlider.setThumbImage(UIImage(named: "group"), for: UIControlState.highlighted)
+        }
         
         // Load default settings
         let tipPercentage = defaults.integer(forKey: "TIP_PERCENTAGE_INDEX")
@@ -122,6 +129,8 @@ class ViewController: UIViewController {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         print("viewWillDisappear")
+        
+        self.view.endEditing(true)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -243,7 +252,7 @@ class ViewController: UIViewController {
     
     internal func keyboardWillShow(notification: NSNotification) {
         if let keyboard = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            UIView.animate(withDuration: 10, animations: {
+            UIView.animate(withDuration: 1, animations: {
                 self.viewFinalTopConstrain.constant += -keyboard.height + self.savedDistance
                 self.view.layoutIfNeeded()
             })
@@ -252,7 +261,7 @@ class ViewController: UIViewController {
     
     internal func keyboardWillHide(notification: NSNotification) {
         if let keyboard = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue {
-            UIView.animate(withDuration: 10, animations: {
+            UIView.animate(withDuration: 1, animations: {
                 self.viewFinalTopConstrain.constant += keyboard.height - self.savedDistance
                 self.view.layoutIfNeeded()
             })
